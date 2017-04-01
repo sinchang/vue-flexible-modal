@@ -2,11 +2,36 @@
     import Modal from '../src/Modal';
 
     export default {
-        el: '#page',
         components: {
             Modal
         },
-        events:{
+        data() {
+            return {
+                modal:{
+                    title:'I am modal title',
+                    visible:false,
+                    text:''
+                },
+                modal2:{
+                    title:'I am modal2 title',
+                    visible:false,
+                    text:'',
+                    bgStyle:{
+                        'z-index':'4000'
+                    },
+                    contentStyle:{
+                        'width':'300px'
+                    }
+                }
+            }
+        },
+        methods:{
+            onShowModal1(){
+                this.modal.visible = !this.modal.visible;
+            },
+            onShowModal2(){
+                this.modal2.visible = !this.modal2.visible;
+            },
             MODAL_OK_EVENT(){
                 // you can manual set modal show or hide use this.modal.visible
                 // this.modal.visible = false;
@@ -17,39 +42,12 @@
                 this.modal.visible = false;
             },
             MODAL_CANCEL_EVENT(){
-
+                console.log('clicked cancel btn')
             },
             MODAL_OK_EVENT2(){
                 // TODO your logic
             },
             MODAL_CANCEL_EVENT2(){
-
-            }
-        },
-        data:{
-            modal:{
-                title:'I am modal title',
-                visible:false,
-                text:''
-            },
-            modal2:{
-                title:'I am modal2 title',
-                visible:false,
-                text:'',
-                bgStyle:{
-                    'z-index':'4000'
-                },
-                contentStyle:{
-                    'width':'300px'
-                }
-            }
-        },
-        methods:{
-            onShowModal1(){
-                this.modal.visible = !this.modal.visible;
-            },
-            onShowModal2(){
-                this.modal2.visible = !this.modal2.visible;
             }
         }
     };
@@ -66,7 +64,7 @@
         <label class="label">Use as MessageBox</label>
         <br>
         <button @click="onShowModal2">Click Show Modal2</button>
-        <modal :title="modal.title" :visible.sync="modal.visible" :verify="true" >
+        <modal :title="modal.title" v-model="modal.visible" :verify="true" :modalId="1" @MODAL_CANCEL_EVENT="MODAL_CANCEL_EVENT" @MODAL_OK_EVENT="MODAL_OK_EVENT">
             <label class="label">Slot Area,write your code in here</label>
             <p class="control">
                 <label class="label">Name:</label>
@@ -74,7 +72,7 @@
             </p>
         </modal>
 
-        <modal :title="modal2.title" :visible.sync="modal2.visible" :bg-click="false" :verify="true" :bg-style="modal2.bgStyle" :content-style="modal2.contentStyle" :only-body="true" :modal-id="1">
+        <modal :title="modal2.title" v-model="modal2.visible" :bg-click="false" :verify="true" :bg-style="modal2.bgStyle" :content-style="modal2.contentStyle" :only-body="true" :modalId="1">
             <label class="label">Welcome to use vue-flexible-modal</label>
             <p class="control">
                 <button class="ok" @click="onShowModal2">ok</button>

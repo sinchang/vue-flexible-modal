@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div v-show="visible" class="modal-bg" @click="onBgClick" :style="bgStyle"></div>
-        <div ref="content" class="modal-ct" v-show="visible" :transition="transition" :style="[contentStyle,ctStyle]">
+        <div v-show="value" class="modal-bg" @click="onBgClick" :style="bgStyle"></div>
+        <div ref="content" class="modal-ct" v-show="value" :transition="transition" :style="[contentStyle,ctStyle]">
             <header v-if="!onlyBody" class="modal-ct-head">
                 <p class="modal-ct-title">{{ title }}</p>
                 <button class="delete" @click="hide"></button>
@@ -34,7 +34,7 @@
                 type: String,
                 default: 'Cancel'
             },
-            visible: {
+            value: {
                 type: Boolean,
                 default: false
             },
@@ -79,6 +79,12 @@
             topGap:{
                 type: Number,
                 default:0
+            },
+            MODAL_CANCEL_EVENT: {
+                type: Function
+            },
+            MODAL_OK_EVENT: {
+                type: Function
             }
         },
         data(){
@@ -87,8 +93,8 @@
             }
         },
         watch: {
-            visible(){
-                if (this.visible) {
+            value(){
+                if (this.value) {
                     this.computeStyle();
                 }
             }
@@ -100,10 +106,10 @@
         },
         methods: {
             show () {
-                this.visible = true
+                this.$emit('input', true);
             },
             hide () {
-                this.visible = false
+                this.$emit('input', false);
             },
             onBgClick(){
                 if (this.bgClick) {
@@ -114,11 +120,11 @@
                 if (!this.verify) {
                     this.hide();
                 }
-                this.$dispatch(`MODAL_OK_EVENT`,this.modalId)
+                this.$emit(`MODAL_OK_EVENT`,this.modalId)
             },
             cancel () {
                 this.hide();
-                this.$dispatch(`MODAL_CANCEL_EVENT`,this.modalId)
+                this.$emit(`MODAL_CANCEL_EVENT`,this.modalId)
             },
             computeStyle(){
                 if(!this.$refs.content || !this.$refs.content.offsetHeight){
