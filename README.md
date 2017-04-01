@@ -25,15 +25,6 @@ Please view the detail code in example folder
         components: {
             Modal
         },
-        events:{
-            MODAL_OK_EVENT(){
-                // you can set modal show or hide with the variable 'this.modal.visible' manually
-                // this.modal.visible = false;
-            },
-            MODAL_CANCEL_EVENT(){
-
-            }
-        },
         data:{
             modal:{
                 title:'I am modal title',
@@ -44,6 +35,13 @@ Please view the detail code in example folder
         methods:{
             onShowModal(){
                 this.modal.visible = !this.modal.visible;
+            },
+            MODAL_OK_EVENT(){
+                // you can set modal show or hide with the variable 'this.modal.visible' manually
+                // this.modal.visible = false;
+            },
+            MODAL_CANCEL_EVENT(){
+
             }
         }
     };
@@ -51,7 +49,7 @@ Please view the detail code in example folder
 <template>
     <div>
         <button @click="onShowModal">Click Show Modal</button>
-        <modal :title="modal.title" :visible.sync="modal.visible" :bg-click="false" :verify="true">
+        <modal :title="modal.title" v-model="modal.visible" :bg-click="false" :verify="true" @MODAL_OK_EVENT="MODAL_OK_EVENT" @MODAL_CANCEL_EVENT="MODAL_CANCEL_EVENT">
             <p class="control">
                 <label class="label">Name:</label>
                 <input class="input" type="text" v-model="modal.text" placeholder="Your name">
@@ -84,7 +82,7 @@ Please view the detail code in example folder
 
 simple
 ```html
-<modal :title="modal.title" :visible.sync="modal.visible" :verify="true">
+<modal :title="modal.title" v-model="modal.visible" :verify="true">
     <label class="label">Slot Area,write your code in here</label>
     <p class="control">
         <label class="label">Name:</label>
@@ -96,7 +94,7 @@ simple
 Use api params to configure a MessageBox
 
 ```html
-<modal :title="modal2.title" :visible.sync="modal2.visible" :bg-click="false" :verify="true" :bg-style="modal2.bgStyle" :content-style="modal2.contentStyle" :only-body="true" :modal-id="1">
+<modal :title="modal2.title" v-model="modal2.visible" :bg-click="false" :verify="true" :bg-style="modal2.bgStyle" :content-style="modal2.contentStyle" :only-body="true" :modal-id="1">
     <label class="label">Welcome to use vue-flexible-modal</label>
     <p class="control">
         <button class="ok" @click="onShowModal2">ok</button>
