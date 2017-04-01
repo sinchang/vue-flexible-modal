@@ -4,14 +4,14 @@ a flexible modal component by vue.js
 [Live Demo](http://think.imoment.vip/modal)
 
 # Installation
-First, install `vue-flexible-modal` from npm:
+First, install `vue2-flexible-modal` from npm:
 ```bash
-$ npm install vue-flexible-modal
+$ npm install vue2-flexible-modal
 ```
 
 Then import it:
 ```javascript
-import Modal from 'vue-flexible-modal';
+import Modal from 'vue2-flexible-modal';
 ```
 
 # Usage
@@ -19,7 +19,7 @@ Please view the detail code in example folder
 
 ```html
 <script>
-    import Modal from 'vue-flexible-modal';
+    import Modal from 'vue2-flexible-modal';
     export default {
         components: {
             Modal
