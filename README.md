@@ -21,7 +21,6 @@ Please view the detail code in example folder
 <script>
     import Modal from 'vue-flexible-modal';
     export default {
-        el: '#page',
         components: {
             Modal
         },
